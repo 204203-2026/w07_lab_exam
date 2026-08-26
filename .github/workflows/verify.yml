@@ -1,0 +1,32 @@
+name: Verify
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  autograde:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install rsync if missing
+        run: |
+          set -e
+          if ! command -v rsync >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq rsync
+          fi
+
+      - name: Build fixtures
+        run: bash init.sh
+
+      - name: Autograding
+        run: |
+          set -e
+          bash check.sh
+          python3 tools/ci_gate.py

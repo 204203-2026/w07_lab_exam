@@ -1,0 +1,9 @@
+# สร้างโดย init.sh — regenerate จาก .seed ได้เสมอ จึงไม่ commit
+logs/
+log-tool/
+report.txt
+harden_report.txt
+deploy.log
+releases/
+__pycache__/
+*.pyc
